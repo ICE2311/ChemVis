@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FaAtom, FaChalkboardTeacher, FaMobileAlt, FaUserGraduate } from 'react-icons/fa';
 import { AiOutlineExperiment } from 'react-icons/ai';
 import { BiTestTube } from 'react-icons/bi';
+import Image from 'next/image';
 
 const ChemistryLandingPage = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -19,7 +20,7 @@ const ChemistryLandingPage = () => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100">
@@ -31,9 +32,11 @@ const ChemistryLandingPage = () => {
             animate={{ rotate: 360, scale: [1, 7, 1] }} // Added scale animation
             transition={{ duration: 100, repeat: Infinity, ease: 'linear' }}
           >
-            <img
-              src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1950&q=80"
+            <Image
+              src="/images/image copy.png"
               alt="3D Molecular Model"
+              width={1920}
+              height={1080}
               className="w-full h-full object-cover opacity-30 overflow-hidden"
               style={{ objectPosition: 'center' }}
             />
@@ -97,10 +100,12 @@ const ChemistryLandingPage = () => {
               transition={{ duration: 0.8 }}
               className="w-full md:w-1/2"
             >
-              <img
-                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+              <Image
+                src="/images/image.png"
                 alt="Chemistry Simulation"
                 className="rounded-lg shadow-md"
+                width={1920}
+                height={1080}
               />
             </motion.div>
             <motion.div

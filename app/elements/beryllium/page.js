@@ -1,22 +1,12 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
-import '@google/model-viewer'
-
+import Image from 'next/image';
+import Head from 'next/head';
 
 const BerylliumExplorationPage = () => {
-    const [activeTab, setActiveTab] = useState("properties");
-    const [expandedSection, setExpandedSection] = useState(null);
-    const [quizStarted, setQuizStarted] = useState(false);
-    const [currentQuizQuestion, setCurrentQuizQuestion] = useState(0);
-    const [userScore, setUserScore] = useState(0);
-    const [answerFeedback, setAnswerFeedback] = useState("");
-
-    useEffect(() => {
-        document.title = `${element.name} - Element Exploration`; // Set your custom title here
-    }, []);
-
+    // Define the element object at the beginning of the component
     const element = {
         name: "Beryllium",
         symbol: "Be",
@@ -24,31 +14,50 @@ const BerylliumExplorationPage = () => {
         atomicMass: 9.0122,
         group: 2,
         period: 2,
-        image: "https://images.unsplash.com/photo-1590913991273-48a20e0639ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJlcnlsbGl1bXxlbnR3Jmxpbml0eS1pcy1zZWRhbGFyLS1mYl9saXZpbmd8OXx8fHwxNjQ5NjY4NTQ5&ixlib=rb-1.2.1&q=80&w=400",
+        image: "https://example.com/beryllium-image.jpg",
         properties: [
-            { name: "Physical Properties", value: "Beryllium is a steel-gray metal that is brittle at room temperature." },
-            { name: "Chemical Properties", value: "Beryllium does not react with water or steam but will react with acids." }
+            { name: "Physical Properties", value: "Beryllium is a gray-white metal." },
+            { name: "Chemical Properties", value: "It is a strong and lightweight metal." }
         ],
         uses: [
-            { value: "Used in aerospace components due to its light weight and stiffness." },
-            { value: "Beryllium copper alloys are used in electrical contacts and tools." }
+            { value: "Used in aerospace applications." },
+            { value: "Commonly used in X-ray equipment." },
+            { value: "Used in nuclear reactors." }
         ],
         isotopes: [
-            { name: "Beryllium-7", value: "A radioactive isotope used in nuclear reactions and studies." },
-            { name: "Beryllium-9", value: "The only stable isotope, making up about 100% of natural beryllium." }
+            { name: "Beryllium-9", value: "The only stable isotope of beryllium." }
         ],
         funFacts: [
-            "Beryllium is one of the lightest metals and has a high melting point.",
-            "It was discovered in 1798 by Louis-Nicolas Vauquelin.",
-            "Beryllium is toxic and must be handled with care.",
-            "It is used in the production of X-ray windows due to its transparency to X-rays."
+            "Beryllium was discovered in 1798 by Louis-Nicolas Vauquelin.",
+            "It is the fourth element in the periodic table.",
+            "Beryllium is toxic in its powdered form."
         ],
         quizQuestions: [
-            { question: "What is the atomic number of Beryllium?", options: ["2", "3", "4", "5"], correctAnswer: 2 },
-            { question: "Which property is true about Beryllium?", options: ["Highly reactive with water", "Brittle at room temperature", "A liquid at room temperature", "Non-toxic"], correctAnswer: 1 },
-            { question: "What is a common use of Beryllium?", options: ["Construction", "Aerospace components", "Batteries", "Medicine"], correctAnswer: 1 }
+            { question: "What is the atomic number of Beryllium?", options: ["3", "4", "5", "6"], correctAnswer: 1 },
+            { question: "In which group is Beryllium located?", options: ["1", "2", "3", "4"], correctAnswer: 1 },
+            { question: "What is a common use for Beryllium?", options: ["Glass production", "Nuclear reactors", "Construction", "Jewelry"], correctAnswer: 1 }
         ]
     };
+
+    const [activeTab, setActiveTab] = useState("properties");
+    const [expandedSection, setExpandedSection] = useState(null);
+    const [quizStarted, setQuizStarted] = useState(false);
+    const [currentQuizQuestion, setCurrentQuizQuestion] = useState(0);
+    const [userScore, setUserScore] = useState(0);
+    const [answerFeedback, setAnswerFeedback] = useState("");
+
+    const [currentFactIndex, setCurrentFactIndex] = useState(0);
+
+    // Moved useEffect after element definition
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentFactIndex((prevIndex) => (prevIndex + 1) % element.funFacts.length);
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, [element.funFacts.length]); // This line should now work without errors
+
+    // Your other component logic (functions and return statement) remains unchanged...
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -80,26 +89,21 @@ const BerylliumExplorationPage = () => {
         }
     };
 
-    const [currentFactIndex, setCurrentFactIndex] = useState(0);
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setCurrentFactIndex((prevIndex) => (prevIndex + 1) % element.funFacts.length);
-        }, 5000);
-
-        return () => clearInterval(intervalId);
-    }, []);
-
     return (
         <div className="bg-gray-100 min-h-screen">
+            <Head>
+                <title>Beryllium Exploration</title>
+                <meta name="description" content="Learn about Beryllium, its properties, uses, and fun facts!" />
+            </Head>
+
             {/* Hero Section */}
-            <div className="relative h-96 bg-gradient-to-r from-green-500 to-teal-600 overflow-hidden">
+            <div className="relative h-96 bg-gradient-to-r from-green-500 to-gray-500 overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
-                        <h1 className="text-6xl font-bold text-white mb-4 hover:text-yellow-300 transition-colors duration-300">
+                        <h1 className="text-6xl font-bold text-white mb-4 hover:text-green-300 transition-colors duration-300">
                             {element.name}
                         </h1>
-                        <p className="text-4xl font-semibold text-white hover:text-yellow-300 transition-colors duration-300">
+                        <p className="text-4xl font-semibold text-white hover:text-green-300 transition-colors duration-300">
                             {element.symbol}
                         </p>
                     </div>
@@ -112,9 +116,11 @@ const BerylliumExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
                     <div className="md:w-1/3 mb-6 md:mb-0">
-                        <img
-                            src={element.image}
+                        <Image
+                            src="/elementimage/image copy 2.png"
                             alt={element.name}
+                            width={400}
+                            height={400}
                             className="w-full h-64 object-cover rounded-lg"
                         />
                     </div>
@@ -122,7 +128,7 @@ const BerylliumExplorationPage = () => {
                         <h2 className="text-3xl font-bold mb-4">Basic Information</h2>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="flex items-center">
-                                <FaAtom className="text-blue-500 mr-2" />
+                                <FaAtom className="text-green-500 mr-2" />
                                 <span>Atomic Number: {element.atomicNumber}</span>
                             </div>
                             <div className="flex items-center">
@@ -130,11 +136,11 @@ const BerylliumExplorationPage = () => {
                                 <span>Atomic Mass: {element.atomicMass}</span>
                             </div>
                             <div className="flex items-center">
-                                <FaLayerGroup className="text-yellow-500 mr-2" />
+                                <FaLayerGroup className="text-green-500 mr-2" />
                                 <span>Group: {element.group}</span>
                             </div>
                             <div className="flex items-center">
-                                <FaTable className="text-red-500 mr-2" />
+                                <FaTable className="text-green-500 mr-2" />
                                 <span>Period: {element.period}</span>
                             </div>
                         </div>
@@ -146,32 +152,18 @@ const BerylliumExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6">
                     <h2 className="text-3xl font-bold mb-4">3D Model</h2>
-                    <div className="bg-gray-200 rounded-lg flex items-center justify-center" style={{ height: '50vh' }} >
-                        <model-viewer
-                            src="/elements/beryllium.glb" // Ensure the correct path to your model
-                            alt="A 3D model of Helium"
-                            auto-rotate
-                            camera-controls
-                            style={{ width: '100%', height: '100%' }}
-                        ></model-viewer>
+                    <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
+                        <iframe
+                            className="w-full h-full rounded-lg"
+                            title="Beryllium Molecule"
+                            frameBorder="0"
+                            allowFullScreen
+                            src="https://sketchfab.com/models/3b7e1d84707c46aeb6cd7f647cfd66a8/embed?autospin=1&autostart=1&preload=1">
+                        </iframe>
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto px-4 py-8">
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                    <h2 className="text-3xl font-bold mb-4">Video</h2>
-                    <div className="bg-gray-200 rounded-lg flex items-center justify-center" style={{ height: '560px' }} >
-                        <iframe width="315" height="560"
-                            src="https://www.youtube.com/embed/215s5mj1cDI"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
 
-
-                    </div>
-                </div>
-            </div>
             {/* Detailed Information Section */}
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6">
@@ -193,13 +185,10 @@ const BerylliumExplorationPage = () => {
                             {element.properties.map((prop, index) => (
                                 <div
                                     key={index}
-                                    className="mb-4 p-4 bg-gray-100 rounded-lg cursor-pointer"
-                                    onClick={() => toggleSection(`property-${index}`)}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
                                 >
                                     <h4 className="font-semibold">{prop.name}</h4>
-                                    {expandedSection === `property-${index}` && (
-                                        <p className="mt-2">{prop.value}</p>
-                                    )}
+                                    <p>{prop.value}</p>
                                 </div>
                             ))}
                         </div>
@@ -208,29 +197,27 @@ const BerylliumExplorationPage = () => {
                     {activeTab === "uses" && (
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Uses</h3>
-                            <ul className="list-disc list-inside">
-                                {element.uses.map((use, index) => (
-                                    <li key={index} className="mb-2">
-                                        {use.value}
-                                    </li>
-                                ))}
-                            </ul>
+                            {element.uses.map((use, index) => (
+                                <div
+                                    key={index}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
+                                >
+                                    <p>{use.value}</p>
+                                </div>
+                            ))}
                         </div>
                     )}
 
                     {activeTab === "isotopes" && (
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Isotopes</h3>
-                            {element.isotopes.map((isotope, index) => (
+                            {element.isotopes.map((iso, index) => (
                                 <div
                                     key={index}
-                                    className="mb-4 p-4 bg-gray-100 rounded-lg cursor-pointer"
-                                    onClick={() => toggleSection(`isotope-${index}`)}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
                                 >
-                                    <h4 className="font-semibold">{isotope.name}</h4>
-                                    {expandedSection === `isotope-${index}` && (
-                                        <p className="mt-2">{isotope.value}</p>
-                                    )}
+                                    <h4 className="font-semibold">{iso.name}</h4>
+                                    <p>{iso.value}</p>
                                 </div>
                             ))}
                         </div>
@@ -238,73 +225,59 @@ const BerylliumExplorationPage = () => {
                 </div>
             </div>
 
-            {/* Fun Facts and Trivia Section */}
+            {/* Fun Facts Section */}
             <div className="container mx-auto px-4 py-8">
-                <div className="bg-yellow-100 rounded-lg shadow-lg p-8">
-                    <h2 className="text-2xl font-bold mb-4">Fun Facts and Trivia</h2>
-                    <div className="mb-8">
-                        <h3 className="text-xl font-semibold mb-2">Did You Know?</h3>
-                        <p className="text-center">{element.funFacts[currentFactIndex]}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold mb-2">Quiz Time!</h3>
-                        {!quizStarted ? (
-                            <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                                onClick={startQuiz}
-                            >
-                                Start Quiz
-                            </button>
-                        ) : (
-                            <div>
-                                <p className="mb-4">{element.quizQuestions[currentQuizQuestion].question}</p>
-                                {answerFeedback && <p className="font-semibold">{answerFeedback}</p>}
-                                <div className="grid grid-cols-2 gap-4">
-                                    {element.quizQuestions[currentQuizQuestion].options.map((option, index) => (
-                                        <button
-                                            key={index}
-                                            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                                            onClick={() => handleQuizAnswer(index)}
-                                        >
-                                            {option}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        {!quizStarted && userScore > 0 && (
-                            <p className="mt-4">Your score: {userScore}/{element.quizQuestions.length}</p>
-                        )}
-                    </div>
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-3xl font-bold mb-4">Fun Facts</h2>
+                    <p className="text-xl">{element.funFacts[currentFactIndex]}</p>
                 </div>
             </div>
 
-            {/* Community Section */}
+            {/* Quiz Section */}
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6">
-                    <h2 className="text-3xl font-bold mb-4">Community</h2>
-                    <div className="mb-8">
-                        <h3 className="text-2xl font-semibold mb-4">Share Your Experience</h3>
-                        <textarea
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            rows="4"
-                            placeholder="Share your experiments or practical uses of this element..."
-                        ></textarea>
-                        <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
-                            Submit
+                    <h2 className="text-3xl font-bold mb-4">Quiz</h2>
+                    {!quizStarted ? (
+                        <button
+                            onClick={startQuiz}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-colors"
+                        >
+                            Start Quiz
                         </button>
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-semibold mb-4">Comments</h3>
-                        <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                            <p className="font-semibold">Alice Smith</p>
-                            <p>Beryllium's applications in aerospace are fascinating!</p>
+                    ) : (
+                        <div>
+                            <h3 className="text-xl mb-4">
+                                Question {currentQuizQuestion + 1}: {element.quizQuestions[currentQuizQuestion].question}
+                            </h3>
+                            {element.quizQuestions[currentQuizQuestion].options.map((option, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleQuizAnswer(index)}
+                                    className="block bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 mb-2"
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                            {answerFeedback && <p className="text-lg mt-2">{answerFeedback}</p>}
                         </div>
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <p className="font-semibold">John Doe</p>
-                            <p>I learned about Beryllium's toxicity in chemistry class!</p>
-                        </div>
-                    </div>
+                    )}
+                    {quizStarted && currentQuizQuestion === element.quizQuestions.length - 1 && (
+                        <p className="text-lg mt-4">
+                            Your score: {userScore} out of {element.quizQuestions.length}
+                        </p>
+                    )}
+                </div>
+            </div>
+
+            {/* Community Comments Section */}
+            <div className="container mx-auto px-4 py-8">
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-3xl font-bold mb-4">Community Comments</h2>
+                    <p className="text-lg mb-4">Share your thoughts about Beryllium!</p>
+                    <textarea className="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4" placeholder="Add your comment..."></textarea>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-colors">
+                        Submit Comment
+                    </button>
                 </div>
             </div>
         </div>

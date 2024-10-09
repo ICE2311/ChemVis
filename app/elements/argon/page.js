@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
+import Image from 'next/image';
 
 const ArgonExplorationPage = () => {
     const [activeTab, setActiveTab] = useState("properties");
@@ -42,6 +43,15 @@ const ArgonExplorationPage = () => {
             { question: "What is a common use for Argon?", options: ["Welding", "Fertilizers", "Medicine", "Food preservation"], correctAnswer: 0 }
         ]
     };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentFactIndex((prevIndex) => (prevIndex + 1) % element.funFacts.length);
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, [element.funFacts.length]);
+
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -101,9 +111,11 @@ const ArgonExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
                     <div className="md:w-1/3 mb-6 md:mb-0">
-                        <img
-                            src={element.image}
+                        <Image
+                            src='/elementimage/image copy.png'
                             alt={element.name}
+                            width={400} // Set the desired width
+                            height={256} // Set the desired height (to maintain aspect ratio)
                             className="w-full h-64 object-cover rounded-lg"
                         />
                     </div>

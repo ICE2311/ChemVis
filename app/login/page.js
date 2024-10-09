@@ -9,8 +9,8 @@ const Login = () => {
         document.title = "Login-Page";
     }, []);
     const { data: session } = useSession()
+    const router = useRouter()
     if (session) {
-        const router = useRouter()
         router.push('/')
     }
     return (

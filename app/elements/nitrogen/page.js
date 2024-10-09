@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
 import '@google/model-viewer'
+import Image from "next/image";
 
 
 const NitrogenExplorationPage = () => {
@@ -85,11 +86,11 @@ const NitrogenExplorationPage = () => {
         }, 5000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [element.funFacts.length]);
 
     useEffect(() => {
         document.title = `${element.name} - Element Exploration`; // Set your custom title here
-    }, []);
+    }, [element.name]);
 
     return (
         <div className="bg-gray-100 min-h-screen">
@@ -113,10 +114,13 @@ const NitrogenExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
                     <div className="md:w-1/3 mb-6 md:mb-0">
-                        <img
-                            src={element.image}
+                        <Image
+                            src="/public/images/image.png"
                             alt={element.name}
+                            width={400} // Specify appropriate width
+                            height={256} // Specify appropriate height
                             className="w-full h-64 object-cover rounded-lg"
+                            priority // Optional: Add this for images above the fold for better performance
                         />
                     </div>
                     <div className="md:w-2/3 md:pl-8">
@@ -305,7 +309,7 @@ const NitrogenExplorationPage = () => {
                         </div>
                         <div className="bg-gray-100 p-4 rounded-lg">
                             <p className="font-semibold">John Doe</p>
-                            <p>I find nitrogen's role in the atmosphere fascinating!</p>
+                            <p>I find nitrogens role in the atmosphere fascinating!</p>
                         </div>
                     </div>
                 </div>

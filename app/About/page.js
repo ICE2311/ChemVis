@@ -85,9 +85,6 @@ const ChemistryAboutUs = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {teamMembers.map((member, index) => (
                             <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center transform transition duration-300 hover:scale-105">
-                                <div className="flex justify-center mb-4">
-                                    <img src={member.image} alt={member.name} className="w-32 h-32 rounded-full object-cover" />
-                                </div>
                                 <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                                 <p className="text-blue-600 mb-2 flex items-center justify-center">
                                     {member.icon}

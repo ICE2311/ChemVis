@@ -1,7 +1,9 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
+import Image from 'next/image';
+import Head from 'next/head'; // Import Head from next/head
 
 const AluminumExplorationPage = () => {
     const [activeTab, setActiveTab] = useState("properties");
@@ -18,7 +20,7 @@ const AluminumExplorationPage = () => {
         atomicMass: 26.98,
         group: 13,
         period: 3,
-        image: "https://images.unsplash.com/photo-1584187017135-c9f9d8b4f124?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDcyfHxhbnVhbHVtfGVufDB8fHx8MTY0OTk3MTg4MQ&ixlib=rb-1.2.1&q=80&w=400",
+        image: "https://media.istockphoto.com/id/538025236/photo/heap-of-shiny-metal-steel-pipes-with-selective-focus-effect.jpg?s=612x612&w=0&k=20&c=NU2vEghQxU77iNNYFwXbt9Q9TRIJUq5TnsUeQjQVMdY=",
         properties: [
             { name: "Physical Properties", value: "Aluminum is a lightweight, silvery-white metal." },
             { name: "Chemical Properties", value: "It is highly reactive and forms a protective oxide coating." }
@@ -81,10 +83,16 @@ const AluminumExplorationPage = () => {
         }, 5000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [element.funFacts.length]);
 
     return (
         <div className="bg-gray-100 min-h-screen">
+            {/* Set custom site title */}
+            <Head>
+                <title>Aluminum Exploration</title>
+                <meta name="description" content="Learn about Aluminum, its properties, uses, and fun facts!" />
+            </Head>
+
             {/* Hero Section */}
             <div className="relative h-96 bg-gradient-to-r from-blue-500 to-gray-500 overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -105,9 +113,11 @@ const AluminumExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
                     <div className="md:w-1/3 mb-6 md:mb-0">
-                        <img
-                            src={element.image}
+                        <Image
+                            src="/elementimage/image.png"
                             alt={element.name}
+                            width={400}
+                            height={400}
                             className="w-full h-64 object-cover rounded-lg"
                         />
                     </div>
@@ -172,13 +182,10 @@ const AluminumExplorationPage = () => {
                             {element.properties.map((prop, index) => (
                                 <div
                                     key={index}
-                                    className="mb-4 p-4 bg-gray-100 rounded-lg cursor-pointer"
-                                    onClick={() => toggleSection(`property-${index}`)}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
                                 >
                                     <h4 className="font-semibold">{prop.name}</h4>
-                                    {expandedSection === `property-${index}` && (
-                                        <p className="mt-2">{prop.value}</p>
-                                    )}
+                                    <p>{prop.value}</p>
                                 </div>
                             ))}
                         </div>
@@ -187,29 +194,27 @@ const AluminumExplorationPage = () => {
                     {activeTab === "uses" && (
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Uses</h3>
-                            <ul className="list-disc list-inside">
-                                {element.uses.map((use, index) => (
-                                    <li key={index} className="mb-2">
-                                        {use.value}
-                                    </li>
-                                ))}
-                            </ul>
+                            {element.uses.map((use, index) => (
+                                <div
+                                    key={index}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
+                                >
+                                    <p>{use.value}</p>
+                                </div>
+                            ))}
                         </div>
                     )}
 
                     {activeTab === "isotopes" && (
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Isotopes</h3>
-                            {element.isotopes.map((isotope, index) => (
+                            {element.isotopes.map((iso, index) => (
                                 <div
                                     key={index}
-                                    className="mb-4 p-4 bg-gray-100 rounded-lg cursor-pointer"
-                                    onClick={() => toggleSection(`isotope-${index}`)}
+                                    className="mb-2 border-b-2 border-gray-300 pb-2"
                                 >
-                                    <h4 className="font-semibold">{isotope.name}</h4>
-                                    {expandedSection === `isotope-${index}` && (
-                                        <p className="mt-2">{isotope.value}</p>
-                                    )}
+                                    <h4 className="font-semibold">{iso.name}</h4>
+                                    <p>{iso.value}</p>
                                 </div>
                             ))}
                         </div>
@@ -217,73 +222,59 @@ const AluminumExplorationPage = () => {
                 </div>
             </div>
 
-            {/* Fun Facts and Trivia Section */}
+            {/* Fun Facts Section */}
             <div className="container mx-auto px-4 py-8">
-                <div className="bg-yellow-100 rounded-lg shadow-lg p-8">
-                    <h2 className="text-2xl font-bold mb-4">Fun Facts and Trivia</h2>
-                    <div className="mb-8">
-                        <h3 className="text-xl font-semibold mb-2">Did You Know?</h3>
-                        <p className="text-center">{element.funFacts[currentFactIndex]}</p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold mb-2">Quiz Time!</h3>
-                        {!quizStarted ? (
-                            <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                                onClick={startQuiz}
-                            >
-                                Start Quiz
-                            </button>
-                        ) : (
-                            <div>
-                                <p className="mb-4">{element.quizQuestions[currentQuizQuestion].question}</p>
-                                {answerFeedback && <p className="font-semibold">{answerFeedback}</p>}
-                                <div className="grid grid-cols-2 gap-4">
-                                    {element.quizQuestions[currentQuizQuestion].options.map((option, index) => (
-                                        <button
-                                            key={index}
-                                            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                                            onClick={() => handleQuizAnswer(index)}
-                                        >
-                                            {option}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        {!quizStarted && userScore > 0 && (
-                            <p className="mt-4">Your score: {userScore}/{element.quizQuestions.length}</p>
-                        )}
-                    </div>
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-3xl font-bold mb-4">Fun Facts</h2>
+                    <p className="text-xl">{element.funFacts[currentFactIndex]}</p>
                 </div>
             </div>
 
-            {/* Community Section */}
+            {/* Quiz Section */}
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6">
-                    <h2 className="text-3xl font-bold mb-4">Community</h2>
-                    <div className="mb-8">
-                        <h3 className="text-2xl font-semibold mb-4">Share Your Experience</h3>
-                        <textarea
-                            className="w-full p-2 border border-gray-300 rounded-lg"
-                            rows="4"
-                            placeholder="Share your experiments or practical uses of Aluminum..."
-                        ></textarea>
-                        <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300">
-                            Submit
+                    <h2 className="text-3xl font-bold mb-4">Quiz</h2>
+                    {!quizStarted ? (
+                        <button
+                            onClick={startQuiz}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-colors"
+                        >
+                            Start Quiz
                         </button>
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-semibold mb-4">Comments</h3>
-                        <div className="bg-gray-100 p-4 rounded-lg mb-4">
-                            <p className="font-semibold">Alice Smith</p>
-                            <p>Aluminum is so versatile and lightweight!</p>
+                    ) : (
+                        <div>
+                            <h3 className="text-xl mb-4">
+                                Question {currentQuizQuestion + 1}: {element.quizQuestions[currentQuizQuestion].question}
+                            </h3>
+                            {element.quizQuestions[currentQuizQuestion].options.map((option, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleQuizAnswer(index)}
+                                    className="block bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 mb-2"
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                            {answerFeedback && <p className="text-lg mt-2">{answerFeedback}</p>}
                         </div>
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <p className="font-semibold">John Doe</p>
-                            <p>Great for construction and packaging!</p>
-                        </div>
-                    </div>
+                    )}
+                    {quizStarted && currentQuizQuestion === element.quizQuestions.length - 1 && (
+                        <p className="text-lg mt-4">
+                            Your score: {userScore} out of {element.quizQuestions.length}
+                        </p>
+                    )}
+                </div>
+            </div>
+
+            {/* Community Comments Section */}
+            <div className="container mx-auto px-4 py-8">
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-3xl font-bold mb-4">Community Comments</h2>
+                    <p className="text-lg mb-4">Share your thoughts about Aluminum!</p>
+                    <textarea className="w-full p-2 border border-gray-300 rounded-lg mb-4" rows="4" placeholder="Add your comment..."></textarea>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-colors">
+                        Submit Comment
+                    </button>
                 </div>
             </div>
         </div>

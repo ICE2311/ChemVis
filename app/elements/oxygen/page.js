@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
 import '@google/model-viewer'
+import Image from "next/image";
 
 
 const OxygenExplorationPage = () => {
@@ -86,11 +87,11 @@ const OxygenExplorationPage = () => {
         }, 5000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [element.funFacts.length]);
 
     useEffect(() => {
         document.title = `${element.name} - Element Exploration`; // Set your custom title here
-    }, []);
+    }, [element.name]);
 
     return (
         <div className="bg-gray-100 min-h-screen">

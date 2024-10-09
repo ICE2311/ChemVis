@@ -1,11 +1,11 @@
 'use client'
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const page = () => {
+const Page = () => {
     useEffect(() => {
         document.title = "Contact";
     }, []);
+
     return (
         <>
             <section className="h-500 py-6 dark:bg-gray-100 dark:text-gray-900">
@@ -56,4 +56,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page;

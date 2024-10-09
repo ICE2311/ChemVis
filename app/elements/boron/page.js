@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { FaAtom, FaWeightHanging, FaLayerGroup, FaTable } from "react-icons/fa";
 import { MdQuiz } from "react-icons/md";
 import '@google/model-viewer'
+import Image from 'next/image';
+
 
 
 const BoronExplorationPage = () => {
@@ -13,9 +15,6 @@ const BoronExplorationPage = () => {
     const [userScore, setUserScore] = useState(0);
     const [answerFeedback, setAnswerFeedback] = useState("");
 
-    useEffect(() => {
-        document.title = `${element.name} - Element Exploration`; // Set your custom title here
-    }, []);
 
     const element = {
         name: "Boron",
@@ -24,7 +23,6 @@ const BoronExplorationPage = () => {
         atomicMass: 10.81,
         group: 13,
         period: 2,
-        image: "https://images.unsplash.com/photo-1614273620185-6cc2e77a1e73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDEwfHxib3Jvbml0ZXxlbnR3Jmxpbml0eS1pcy1zZWRhbGFyLS1mYl9saXZpbmd8MHx8fHwxNjQ5NjY4NTQ5&ixlib=rb-1.2.1&q=80&w=400",
         properties: [
             { name: "Physical Properties", value: "Boron is a dark, amorphous powder or a hard, crystalline solid." },
             { name: "Chemical Properties", value: "Boron reacts with oxygen, forming boron trioxide." }
@@ -66,6 +64,10 @@ const BoronExplorationPage = () => {
         setAnswerFeedback("");
     };
 
+    useEffect(() => {
+        document.title = `${element.name} - Element Exploration`; // Set your custom title here
+    }, [element.name]);
+
     const handleQuizAnswer = (selectedAnswer) => {
         if (selectedAnswer === element.quizQuestions[currentQuizQuestion].correctAnswer) {
             setUserScore(userScore + 1);
@@ -88,7 +90,8 @@ const BoronExplorationPage = () => {
         }, 5000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [element.funFacts.length]); // Add element.funFacts.length to dependencies
+
 
     return (
         <div className="bg-gray-100 min-h-screen">
@@ -112,9 +115,11 @@ const BoronExplorationPage = () => {
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
                     <div className="md:w-1/3 mb-6 md:mb-0">
-                        <img
-                            src={element.image}
+                        <Image
+                            src="/elementimage/image copy 3.png"
                             alt={element.name}
+                            width={400} // Specify width
+                            height={256} // Specify height based on the aspect ratio
                             className="w-full h-64 object-cover rounded-lg"
                         />
                     </div>
