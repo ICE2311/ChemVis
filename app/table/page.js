@@ -49,7 +49,7 @@ const elements = [
     { number: 43, symbol: "Tc", name: "Technetium", mass: 98, category: "transition-metal", group: 7, period: 5 },
     { number: 44, symbol: "Ru", name: "Ruthenium", mass: 101.07, category: "transition-metal", group: 8, period: 5 },
     { number: 45, symbol: "Rh", name: "Rhodium", mass: 102.9055, category: "transition-metal", group: 9, period: 5 },
-    { number: 46, symbol: "Pd", name: "Palladium", mass: 106.42, category: "transition-metal", group: 10, period: 5 },k
+    { number: 46, symbol: "Pd", name: "Palladium", mass: 106.42, category: "transition-metal", group: 10, period: 5 },
     { number: 47, symbol: "Ag", name: "Silver", mass: 107.8682, category: "transition-metal", group: 11, period: 5 },
     { number: 48, symbol: "Cd", name: "Cadmium", mass: 112.414, category: "transition-metal", group: 12, period: 5 },
     { number: 49, symbol: "In", name: "Indium", mass: 114.818, category: "post-transition-metal", group: 13, period: 5 },
