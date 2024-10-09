@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.snake-game {
+    height: 61.5vh;
+}
+
+.space {
+    min-height: 61.5vh;
+}
+
+.profile-dropdown {
+    display: none;
+}
+
+#dropdownHoverButton:hover+.profile-dropdown {
+    display: block;
+}
+
+.profile-dropdown:hover {
+    display: block;
+}
+
+/* General Styles */
+.periodic-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Main Periodic Table */
+.main-table {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 1px;
+    margin-bottom: 20px;
+}
+
+/* Element Style */
+.element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover Effect */
+.element:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Element Styles for Specific Categories */
+.alkali-metal {
+    background-color: #f9e79f;
+}
+
+.alkaline-earth-metal {
+    background-color: #f5b7b1;
+}
+
+.transition-metal {
+    background-color: #d5a6bd;
+}
+
+.post-transition-metal {
+    background-color: #f6c2c2;
+}
+
+.metalloid {
+    background-color: #d9ead3;
+}
+
+.nonmetal {
+    background-color: #e0f7fa;
+}
+
+.halogen {
+    background-color: #fce4ec;
+}
+
+.noble-gas {
+    background-color: #d0e8f2;
+}
+
+.lanthanide {
+    background-color: #c1c1c1;
+}
+
+.actinide {
+    background-color: #b7a9a9;
+}
+
+/* Additional Styles for Symbols and Numbers */
+.symbol {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.number {
+    font-size: 0.9em;
+}
+
+.mass {
+    font-size: 0.8em;
+}
+
+/* Lanthanides and Actinides Series */
+.lanthanide-series,
+.actinide-series {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lanthanide-row,
+.actinide-row {
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+}
+
+/* About Us Section */
+.about-us-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.about-us-container h1,
+.about-us-container h2 {
+    color: #333;
+}
+
+.about-us-container p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.team-section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.team-member {
+    width: 200px;
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.team-member h3 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.team-member p {
+    color: #777;
+}
