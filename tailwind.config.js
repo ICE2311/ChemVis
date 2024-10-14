@@ -1,5 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {
+      backgroundColor: ['hover', 'focus'],
+      textColor: ['hover', 'focus'],
+    },
+  },
+  plugins: [],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

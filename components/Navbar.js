@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import { useSession, signOut } from "next-auth/react";
 import { elements } from "./../app/elements/page";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const { data: session } = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredElements, setFilteredElements] = useState(elements);
+    const router = useRouter();  // Using router for navigation
 
     const toggleMenu = () => setIsMenuOpen(prev => !prev);
 
@@ -21,6 +23,18 @@ const Navbar = () => {
             element.symbol.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredElements(filtered);
+    };
+
+    const handleElementClick = (elementName) => {
+        if (typeof elementName === 'string') {
+            setSearchTerm("");
+            setFilteredElements([]);
+            setTimeout(() => {
+                router.push(`/elements/${elementName.toLowerCase()}`);
+            }, 100);
+        } else {
+            console.error('Element name is not a string:', elementName);
+        }
     };
 
     return (
@@ -55,6 +69,8 @@ const Navbar = () => {
                             placeholder="Search..."
                             value={searchTerm}
                             onChange={handleSearchChange}
+                            onClick={handleElementClick}
+                            autoComplete="off"
                             className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-100 dark:text-gray-800 focus:dark:bg-gray-50"
                         />
                         <button type="submit" title="Search" className="absolute left-2 top-2">
@@ -68,9 +84,11 @@ const Navbar = () => {
                                     {filteredElements.length > 0 ? (
                                         filteredElements.map(element => (
                                             <li key={element.id} className="px-4 py-2 hover:bg-gray-100">
-                                                <Link href={`/elements/${element.name.toLowerCase()}`}>
+                                                <button
+                                                    onClick={() => handleElementClick(element.name)} className="w-full text-left"
+                                                >
                                                     {element.name} ({element.symbol})
-                                                </Link>
+                                                </button>
                                             </li>
                                         ))
                                     ) : (
@@ -81,10 +99,13 @@ const Navbar = () => {
                         )}
                     </div>
                     {session && (
-                        <div className="relative">
+                        <div className="relative"
+                            onMouseEnter={() => setIsMenuOpen(true)}
+                            onMouseLeave={() => setIsMenuOpen(false)}
+                        >
                             <button
                                 id="dropdownHoverButton"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-violet-600 dark:hover:bg-violet-600 dark:focus:ring-blue-800"
+                                className="text-white bg-blue-700 hover:bg-gray-100 dark:hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-violet-600 dark:focus:ring-blue-800"
                                 type="button"
                                 onClick={toggleMenu}
                             >
@@ -94,20 +115,27 @@ const Navbar = () => {
                                 </svg>
                             </button>
                             {isMenuOpen && (
-                                <div className="absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-34 dark:bg-gray-700">
+                                <div className="absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-34 dark:bg-gray-700 z-50">
                                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                         <li>
-                                            <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
+                                            <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Dashboard
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/table" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Periodic table</Link>
+                                            <Link href="/table" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Periodic Table
+                                            </Link>
                                         </li>
                                         <li>
-                                            <button onClick={() => signOut()} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</button>
+                                            <button onClick={() => signOut()} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Sign out
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
                             )}
+
                         </div>
                     )}
                     {!session && (
@@ -118,7 +146,7 @@ const Navbar = () => {
                 </div>
                 {/* Mobile Menu Button */}
                 <button title="Open menu" type="button" className="p-4 lg:hidden" onClick={toggleMenu}>
-                    <svg  fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-gray-800">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 dark:text-gray-800">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>

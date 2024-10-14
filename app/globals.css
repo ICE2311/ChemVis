@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    color-scheme: only light;
+}
+
 .snake-game {
     height: 61.5vh;
 }
@@ -11,7 +15,13 @@
 }
 
 .profile-dropdown {
+    position: relative;
     display: none;
+}
+
+.parent-container {
+    position: relative;
+    z-index: 10;
 }
 
 #dropdownHoverButton:hover+.profile-dropdown {
